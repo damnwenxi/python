@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}register{% endblock %}
+
+{% block container %}
+    <br>
+    <br>
+    <div class="layui-main">
+        <fieldset class="layui-elem-field">
+          <legend>用户注册</legend>
+          <div class="layui-field-box">
+              <form class="layui-form" action="" method="post">
+
+                  {% if tips %}
+                      <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <p style="color: red">{{ tips }}</p>
+                        </div>
+                      </div>
+                  {% endif %}
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="name" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                      <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">*6-20位字母或数字</div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="email"  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                      <input type="text" name="phone" lay-verify="required" placeholder="请输入电话" autocomplete="off" class="layui-input">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                      <input type="radio" name="sex" value="男" title="男">
+                      <input type="radio" name="sex" value="女" title="女" checked>
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block">
+                      <input type="radio" name="role" value="student" title="学生" checked>
+                      <input lay-filter="confirm" type="radio" name="role" value="manager" title="学委">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">自我介绍</label>
+                    <div class="layui-input-block">
+                      <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <div class="layui-input-block">
+                      <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                  </div>
+
+              </form>
+          </div>
+        </fieldset>
+
+    </div>
+
+<script>
+    layui.use(['form','layer'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+
+      //监听提交
+      form.on('radio(confirm)',function (data) {
+          layer.confirm('想清楚了吗？',{
+
+              btn:['我是学委','我再想想']
+          })
+      })
+    });
+</script>
+
+{% endblock %}

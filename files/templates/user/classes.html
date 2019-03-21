@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}classes{% endblock %}
+
+{% block container %}
+
+        <div class="layui-main">
+
+            <h1 class="header_with_left layui-anim layui-anim-scale">已加入班级</h1>
+            <form class="layui-form" action="" method="post">
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">搜索</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="search" required  lay-verify="required" placeholder="在此搜索" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">*在此模糊搜索</div>
+                <div style="color: red;float:right; " class="layui-form-mid layui-word-aux">*{{ tips }}</div>
+
+              </div>
+            </form>
+            <table class="layui-table">
+              <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>班级ID</th>
+                  <th>班级名称</th>
+                  <th>加入时间</th>
+                  <th>学委</th>
+                  <th>班级人数</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for row in rows %}
+                <tr>
+                  <td>{{ row.id }}</td>
+                  <td>{{ row.name }}</td>
+                  <td>{{ row.c_time }}</td>
+                  <td>{{ row.manager }}</td>
+                  <td>{{ row.size }}</td>
+                  <td>
+                      <form action="" method="post" onsubmit="return confirm('确定要加入该班级吗？')">
+                          <input type="hidden" name="class_id" value={{ row.id }}>
+                          <button type="submit" class="layui-btn layui-btn-sm">加入</button>
+                      </form>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+
+
+        </div>
+        {#   背景统计 #}
+
+<script>
+    layui.use('form', function(){
+      var form = layui.form;
+
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}home{% endblock %}
+{% load static %}
+
+
+{% block container %}
+    <link rel="stylesheet" href={% static 'base.css' %}>
+    <div class="layui-main">
+        <br>
+        <br>
+        <h1 class="header1 layui-anim layui-anim-scale"><span class="header1_with_line">Slogon</span></h1>
+
+        <h1 class="header1">在平坦的道路上曲折前行</h1>
+
+        <div class="jumbotron">
+            <h1 class="header_boot">Demo1 交作业</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
+                to featured content or information.</p>
+            <hr class="my-4">
+            <p class="lead">It uses utility classes for typography and spacing to space content out within the larger
+                container.</p>
+            <p class="lead">
+
+                {% if not request.session.is_login %}
+
+                    <a role="button" class="btn btn-primary btn-lg" href="/register/">注 册</a>
+                    <a role="button" class="btn btn-primary btn-lg" href="/login/">登 录</a>
+
+                {% else %}
+
+                    <a role="button" href="/upload/" class="btn btn-primary btn-lg">去交作业</a>
+                    {% if role == 'manager' %}
+                        <a role="button" href="/mission/" class="btn btn-primary btn-lg">我是学委</a>
+                    {% endif %}
+
+                {% endif %}
+
+            </p>
+        </div>
+    </div>
+
+    {#   背景统计 #}
+    <div class="back">
+        <div class="layui-main">
+            <ul class="statue">
+                <li><h1>已加入班级</h1>
+                    <h1>{{ class_num }}个</h1></li>
+                <li><h1>已完成作业</h1>
+                    <h1>{{ work_num }}份</h1></li>
+                <li><h1>注册用户</h1>
+                    <h1>{{ user_num }}名</h1></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="timeline">
+
+        <ul class="layui-timeline">
+            {% for row in rows %}
+               <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title">IP:{{ row.ip }}</h3>
+                    <p>
+                        {{ row.last_mess }}<i class="layui-icon"></i>
+                        <br>
+                        发送时间：{{ row.c_time }}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <div class="layui-timeline-title">过去</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-main">
+        <form action="" class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">留言：</label>
+                <div class="layui-input-block">
+                    <textarea name="mess" placeholder="在此处留言：" class="layui-textarea"></textarea>
+                </div>
+                <br>
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="formDemo">立即发送</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <hr>
+    <div class="footer">
+        <p>
+            <a href=""><img src={% static 'images/logo2.png' %}></a>
+        </p>
+        <p><a href="www.kkboom.xyz/index">kkboom的个人网站</a> 2018-2019 © <a href="www.kkboom.xyz/index">www.kkboom.xyz</a>
+        </p>
+        <p><a href="" class="qq">与我联系</a> <a href="">1396956549@qq.com</a></p>
+
+    </div>
+
+
+    <script>
+        window.onload = function () {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                $('.qq').mouseover(function () {
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        shadeClose: true,
+                        area: ['200px', '320px'], //宽高
+                        content: '<img style="width:200px" src={% static 'images/qq.JPG' %}>'
+                    });
+                })
+            });
+        }
+
+
+    </script>
+
+{% endblock %}

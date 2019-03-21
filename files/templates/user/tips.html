@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}tip{% endblock %}
+
+{% block container %}
+        <div class="layui-main">
+            <br>
+            <br>
+            <h1 class="header1 layui-anim layui-anim-scale"><span class="header1_with_line">Tips</span></h1>
+
+            <h1 class="header1">
+                {{ tips }}
+            </h1>
+            <h3 style="line-height: 100px;color: red;text-align: center">
+               <span id="sp">3</span>秒后返回！
+            </h3>
+
+
+        </div>
+
+<script>
+    window.onload=function () {
+        setInterval(go,1000)
+        };
+        var x=2;
+        var url_back = {{ url|safe }};
+        function go() {
+            if (x > 0) {
+                document.getElementById("sp").innerText = x;
+            } else {
+                location.href = url_back;
+            }
+            x--;
+        }
+
+
+</script>
+
+{% endblock %}

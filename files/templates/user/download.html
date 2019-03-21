@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}download{% endblock %}
+
+{% block container %}
+
+    <div class="layui-main">
+        <br>
+        <h1>download</h1>
+        <h2>{{ name }}</h2>
+        <h2>{{ id }}</h2>
+        <a href="download_file/" download={{ name }}>下载</a>
+    </div>
+
+    <script>
+
+    </script>
+
+{% endblock %}

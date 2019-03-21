@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>{% block title %}base{% endblock %}</title>
+    <link rel="stylesheet" href={% static 'layui/css/layui.css' %}>
+    <link rel="stylesheet" href={% static 'base.css' %}>
+    <script src={% static 'jquery-3.3.1.min.js' %}></script>
+    <script src={% static 'layui/layui.js' %}></script>
+
+</head>
+<body>
+<script src={% static 'base.js' %}></script>
+<!--导航栏-->
+<div class="header layui-header">
+    <div class="layui-main">
+        <a class="logo" href="/" >
+            <img src={% static 'images/logo.png' %}>
+        </a>
+
+        <ul class="layui-nav" lay-filter="">
+          <li class="layui-nav-item"><a href="/index/">首页</a></li>
+          <li class="layui-nav-item"><a href="/classes/">所有班级</a></li>
+          <li class="layui-nav-item"><a href="/mission/">布置作业</a></li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">友情链接</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a href="">bootswatch</a></dd>
+              <dd><a href="">bootstrap</a></dd>
+              <dd><a href="">layui</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item"><a href="/create/">创建班级</a></li>
+
+          {% if request.session.is_login %}
+          <li class="layui-nav-item">
+            <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">{{ request.session.user_name }}</a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;">个人中心</a></dd>
+              <dd><a href="javascript:;">消息通知</a></dd>
+              <dd><a href="/logout/">退了</a></dd>
+            </dl>
+          </li>
+
+          {% else %}
+          <li class="layui-nav-item"><a href="/login/">登录</a></li>
+          {% endif %}
+
+        </ul>
+
+    </div>
+</div>
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+      var element = layui.element;
+
+      //…
+    });
+
+</script>
+
+<!--撑开-->
+<div  style="height: 60px;"></div>
+
+{% block container %}
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% block title %}mission{% endblock %}
+
+{% block container %}
+
+    <div class="layui-main">
+
+        <br>
+        <div class="layui-tab layui-tab-brief" lay-filter="tab">
+            <ul style="text-align: center" class="layui-tab-title">
+                <li class="layui-this">布置作业</li>
+                <li>最近作业</li>
+                <li>完成进度</li>
+
+            </ul>
+            <br>
+
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <fieldset class="layui-elem-field layui-elem-field-self">
+                        <legend>布置作业</legend>
+                        <div class="layui-field-box">
+
+                            <form class="layui-form" action="" lay-filter="example" method="post"
+                                  enctype="multipart/form-data">
+                                {% if tips %}
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label"></label>
+                                        <div class="layui-input-block">
+                                            <p style="color: red">{{ tips }}</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if is_join %}
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <p>{{ username }},你的班级是{{ is_join }}班。
+                                                <a style="color: rgb(17,134,117)" href="/classes/">查看</a></p>
+                                        </div>
+                                    </div>
+
+                                {% else %}
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <p>*你还没有加入任何班级，快去加入班级吧！<a style="color: rgb(17,134,117)" href="/classes/">加入班级</a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">作业名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="name" autocomplete="off" lay-verify="required"
+                                               placeholder="请输入作业名称" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">命名格式</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" lay-verify="required"
+                                               placeholder="如：计算机网络 大花 920010" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">截止日期</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="date" id="date" lay-verify="required"
+                                                   placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">*请选择作业提交截止日期</div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">应交人数</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="num" placeholder="请输入人数" lay-verify="required"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-inline">
+                                        <input type="file" name="files" autocomplete="off">
+                                    </div>
+                                    <div class="layui-word-aux">*上传模版文件</div>
+                                </div>
+
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">要求</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="description" placeholder="作业要求可以写在这..."
+                                                  class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field">
+                        <legend>最近作业</legend>
+                        <div class="layui-field-box">
+
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>作业名称</th>
+                                    <th>命名</th>
+                                    <th>发布时间</th>
+                                    <th>已提交</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in rows %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.name }}</td>
+                                        <td>{{ row.title }}</td>
+                                        <td>{{ row.c_time }}</td>
+                                        <td>{{ row.done }}</td>
+                                        <td>
+                                            <form action="/download/" method="get">
+                                                <input type="hidden" name="id" value={{ row.id }}>
+                                                <button class="layui-btn layui-btn-sm">去下载</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field">
+                        <legend>完成进度</legend>
+                        <div class="layui-field-box">
+
+                            <div class="layui-collapse">
+                              <div class="layui-colla-item">
+                                <h2 class="layui-colla-title">杜甫</h2>
+                                <div class="layui-colla-content layui-show">
+                                    <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>作业名称</th>
+                                    <th>命名</th>
+                                    <th>发布时间</th>
+                                    <th>已提交</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in rows %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.name }}</td>
+                                        <td>{{ row.title }}</td>
+                                        <td>{{ row.c_time }}</td>
+                                        <td>{{ row.done }}</td>
+                                        <td>
+                                            <form action="/download/" method="get">
+                                                <input type="hidden" name="id" value={{ row.id }}>
+                                                <button class="layui-btn layui-btn-sm">去下载</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                                </div>
+                              </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    {#   背景统计 #}
+
+    <script>
+        layui.use(['form', 'element', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , laydate = layui.laydate
+                , element = layui.element;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+
+
+            //监听提交
+            form.on('submit(demo1)', function (data) {
+                layer.alert(JSON.stringify(data.field), {
+                    title: '最终的提交信息'
+                })
+                return true;
+            });
+
+            //表单初始赋值
+            form.val('example', {
+                "num": 72
+            });
+
+            element.on('tab(tab)', function (data) {
+                var index = data.index
+                {#console.log(data.index)#}
+                $('.layui-tab-content').eq(index).siblings().addClass('display_none');
+            });
+
+
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+*{
+    text-decoration: none;
+    list-style: none;
+}
+
+.header{
+    height: 59px;
+    width: 100%;
+    border-bottom: 1px solid #404553;
+    background-color: #393D49;
+    position: fixed;
+}
+/*logo样式*/
+.logo {
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+.logo img {
+    height: 55px;
+}
+/*导航条样式*/
+.header .layui-nav{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+    background: none;
+}
+/*黑板背景*/
+.back{
+    width: 100%;
+    background-color: #393D49;
+}
+
+/*首页按钮样式*/
+.btn{
+   "text-align: center"
+}
+.btn a{
+    margin: 0 50px;
+}
+
+/*注册框样式*/
+.layui-elem-field-self{
+    padding: 30px 50px;
+}
+
+/*首页状态信息*/
+.back .statue{
+    display: flex;
+
+}
+.back .statue li{
+    margin: auto;
+    float: left;
+    padding: 50px 0;
+}
+.back .statue li h1{
+    text-align: center;
+    font-weight: 300;
+    color: whitesmoke;
+}
+
+/*首页标题栏样式*/
+.header1{
+    text-align: center;
+    font-weight: 300;
+    line-height: 100px;
+    font-size: 40px;
+}
+
+.header1_with_line{
+    text-align: center;
+    font-weight: 300;
+    line-height: 70px;
+    font-size: 40px;
+    border-bottom: 5px solid rgb(17,134,117);
+    display: inline-block;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.header_with_left{
+    font-weight: 300;
+    font-size: 30px;
+    border-left: 5px solid rgb(17,134,117);
+    display: inline-block;
+    padding: 0 20px;
+    margin: 20px 0 20px 0;
+}
+/*bootstrap样式*/
+.header_boot{
+    font-weight: 300;
+    line-height: 100px;
+    font-size: 50px;
+}
+
+.jumbotron {
+    padding: 4rem 4rem;
+    margin-bottom: 2rem;
+    background-color: #ecf0f1;
+    border-radius: 0.3rem;
+}
+.lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn-lg, .btn-group-lg>.btn {
+    padding: 0.5rem 1rem;
+    font-size: 1.171875rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #2C3E50;
+    border-color: #2C3E50;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    user-select: none;
+}
+hr{
+    margin: 10px 0;
+    height: 2px;
+}
+
+/*选项卡显示隐藏*/
+display_none{
+    display: none;
+}
+
+/*时间线外部框样式*/
+.timeline{
+    width: 60%;
+    margin: 40px auto;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+
+.timeline p{
+    background-color: #f6f9f8;
+    padding: 5px 20px 5px;
+}
+.footer{
+    padding-bottom: 50px;
+}
+.footer p{
+    font-weight: 300;
+    text-align: center;
+    line-height: 30px;
+}
+.footer p a{
+    color: #333;
+}
+.footer p a img{
+    height: 55px;
+}

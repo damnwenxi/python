@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% block title %}upload{% endblock %}
+
+{% block container %}
+
+    <div class="layui-main">
+        {#        tab  栏#}
+        <br>
+        <div class="layui-tab layui-tab-brief" lay-filter="tab">
+            <ul style="text-align: center" class="layui-tab-title">
+                <li class="layui-this">交作业</li>
+                <li>历史作业</li>
+            </ul>
+            <br>
+
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <fieldset class="layui-elem-field layui-elem-field-self">
+                        <legend>交作业</legend>
+                        <div class="layui-field-box">
+
+                            <form class="layui-form" action="" method="post" enctype="multipart/form-data">
+
+                                {% if is_join %}
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <p>{{ username }},你的班级是{{ is_join }}班。<a style="color: rgb(17,134,117)"
+                                                                                     href="/classes/">查看</a></p>
+                                        </div>
+                                    </div>
+
+                                {% else %}
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <p>*你还没有加入任何班级，快去加入班级吧！<a style="color: rgb(17,134,117)" href="/classes/">加入班级</a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">请选择作业</label>
+                                    <div class="layui-input-block">
+                                        <select lay-filter="select" name="name" lay-verify="required">
+                                            <option value=""></option>
+                                            {% for mission in missions %}
+                                                <option value={{ forloop.counter0 }}>{{ mission.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">作业名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="title" required lay-verify="required"
+                                               placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                    </div>
+
+                                    <label class="layui-form-label">命名格式</label>
+                                    <div class="layui-input-inline">
+                                        <input id="title" style="color: red;border: none" class="layui-input"
+                                               type="text" readonly value="xxx-xxx-xxx">
+                                    </div>
+                                    {#                          <div class="layui-form-mid layui-word-aux">请按上文格式输入</div>#}
+                                </div>
+
+                                {#                            d代交作业ID 不显示 发送至后台筛选用#}
+                                <input id="test2" type="hidden" name="mission_id" readonly>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-inline">
+                                        <input type="file" name="files" required lay-verify="required"
+                                               autocomplete="off">
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button type="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即提交
+                                        </button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+
+                                <p>{{ tips }}</p>
+
+                            </form>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field">
+                        <legend>历史作业</legend>
+                        <div class="layui-field-box">
+
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>作业名称</th>
+                                    <th>命名</th>
+                                    <th>发布时间</th>
+                                    <th>是否完成</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in rows %}
+                                    <tr>
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.name }}</td>
+                                        <td>{{ row.name }}</td>
+                                        <td>{{ row.c_time }}</td>
+                                        <td>{{ row.onload }}</td>
+                                        <td>
+                                            <form action="" method="post" onsubmit="return confirm('确定要撤回？')">
+                                                <input type="hidden" name="class_id" value={{ row.id }}>
+                                                <button type="submit" class="layui-btn layui-btn-sm">撤回</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {#   背景统计 #}
+
+    <script>
+        layui.use(['form', 'element'], function () {
+            var form = layui.form;
+            var element = layui.element;
+            form.on('select(select)', function (data) {
+                {#select联动匹配命名格式#}
+                var index = data.value
+                {#console.log(index)#}
+                test = {{ missions|safe }}
+                $('#title').val(test[index].title)
+                $('#test2').val(test[index].id)
+                {#console.log(test[index].title)#}
+                {#console.log()#}
+            })
+
+            element.on('tab(tab)', function (data) {
+                var index = data.index
+                {#console.log(data.index)#}
+                $('.layui-tab-content').eq(index).siblings().addClass('display_none');
+            })
+
+        });
+
+    </script>
+
+{% endblock %}
