@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+<h1>hello</h1>
+
+<img id="image" src="/static/imgs/{{ img }}"  alt="">
+<article id="target"></article>
+
+<script>
+        $(function () {
+           checkLogin();
+        });
+
+
+        function checkLogin() {
+            $.ajax({
+                url: '/checklogin',
+                type: 'GET',
+                dataType: 'JSON',
+                success:function (arg) {
+                    if (arg.code == 66){
+                        console.log("二维码未失效");
+                        setTimeout(function () {
+                            checkLogin()
+                        },3000);
+                    }else if (arg.code == 67){
+                        console.log("二维码认证中");
+                        setTimeout(function () {
+                            checkLogin()
+                        },3000);
+                    }else if(arg.code == 200) {
+                        console.log("登录成功");
+                        $('#target').innerHTML = arg.data;
+                    }
+                }
+            })
+        }
+
+    </script>
+
+
+</body>
+</html>
